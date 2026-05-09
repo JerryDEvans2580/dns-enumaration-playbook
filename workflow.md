@@ -79,8 +79,6 @@ domain.com. 604800 IN NS ns.domain.com.
 ;; ADDITIONAL SECTION:
 ns.domain.com. 604800 IN A 127.0.0.1
 ```
-### Sometimes it is also possible to query a DNS server's version using a class CHAOS query and type TXT. However, this entry must exist on the DNS server. For this, we could use the following command:
-
 ```text
 dig CH TXT version.bind @targetIP
 <<>> DiG 9.18.33-1~deb12u2-Debian <<>> CH TXT version.bind @targetIP
@@ -104,6 +102,10 @@ version.bind.		0	CH	TXT	"9.16.1-Ubuntu"
 ;; WHEN: Sat May 09 09:27:16 CDT 2026
 ;; MSG SIZE  rcvd: 95
 ```
+### We can use the option ANY to view all available records. This will cause the server to show us all available entries that it is willing to disclose. It is important to note that not all entries from the zones will be shown.
+
+
+
 ### Security Insight
 
 NS enumeration helps identify:
@@ -129,11 +131,29 @@ If successful:
 ---
 
 ## 3. Enumerate TXT Records
+```text
+dig CH TXT version.bind @targetIP
+<<>> DiG 9.18.33-1~deb12u2-Debian <<>> CH TXT version.bind @targetIP
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41447
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
 
-```bash
-dig txt domain.com
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 6f0fdc07326b35210100000069ff4444f19e2c679cfa1c3b (good)
+;; QUESTION SECTION:
+;version.bind.			CH	TXT
+
+;; ANSWER SECTION:
+version.bind.		0	CH	TXT	"9.16.1-Ubuntu"
+
+;; Query time: 9 msec
+;; SERVER: targetIP
+;; WHEN: Sat May 09 09:27:16 CDT 2026
+;; MSG SIZE  rcvd: 95
 ```
-
 Look for:
 
 * SPF records

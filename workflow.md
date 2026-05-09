@@ -9,34 +9,109 @@ A structured approach to DNS enumeration:
 Determine authoritative DNS servers.
 
 ```bash
-dig soa domain.com
-response:
-; <<>> DiG 9.18.33-1~deb12u2-Debian <<>> soa domain.com
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45522
-;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+# DNS Authority Enumeration
 
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 1232
-;; QUESTION SECTION:
-;www.inlanefreight.com.		IN	SOA
-
-;; AUTHORITY SECTION:
-inlanefreight.com.	900	IN	SOA	ns-161.awsdns-20.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
-
-;; Query time: 16 msec
-;; SERVER: 1.1.1.1#53(1.1.1.1) (UDP)
-;; WHEN: Sat May 09 07:52:55 CDT 2026
-;; MSG SIZE  rcvd: 128
-___________________________________
-dig ns domain.com
-
-resoponse:
-
-```
+A structured approach to identifying authoritative DNS infrastructure.
 
 ---
+
+## SOA Enumeration
+
+The SOA (Start of Authority) record provides information about:
+
+* the primary DNS server
+* zone administration
+* DNS timing configuration
+
+### Command
+
+```bash
+dig soa domain.com
+```
+
+### Example Response
+
+```text
+; <<>> DiG 9.x <<>> soa domain.com
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR
+
+;; QUESTION SECTION:
+;domain.com.          IN SOA
+
+;; AUTHORITY SECTION:
+domain.com. 900 IN SOA ns-161.awsdns-20.com. awsdns-hostmaster.amazon.com.
+```
+
+### Security Insight
+
+SOA records may reveal:
+
+* primary DNS infrastructure
+* DNS provider information
+* administrative naming conventions
+
+---
+
+## NS Enumeration
+
+Identify authoritative name servers.
+
+### Command
+
+```bash
+dig ns domain.com @DNS_SERVER
+```
+
+### Example Response
+
+```text
+; <<>> DiG 9.x <<>> ns domain.com @192.168.x.x
+
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;domain.com.          IN NS
+
+;; ANSWER SECTION:
+domain.com. 604800 IN NS ns.domain.com.
+
+;; ADDITIONAL SECTION:
+ns.domain.com. 604800 IN A 127.0.0.1
+```
+### Sometimes it is also possible to query a DNS server's version using a class CHAOS query and type TXT. However, this entry must exist on the DNS server. For this, we could use the following command:
+
+```text
+dig CH TXT version.bind @targetIP
+<<>> DiG 9.18.33-1~deb12u2-Debian <<>> CH TXT version.bind @targetIP
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41447
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 6f0fdc07326b35210100000069ff4444f19e2c679cfa1c3b (good)
+;; QUESTION SECTION:
+;version.bind.			CH	TXT
+
+;; ANSWER SECTION:
+version.bind.		0	CH	TXT	"9.16.1-Ubuntu"
+
+;; Query time: 9 msec
+;; SERVER: targetIP
+;; WHEN: Sat May 09 09:27:16 CDT 2026
+;; MSG SIZE  rcvd: 95
+```
+### Security Insight
+
+NS enumeration helps identify:
+
+* authoritative DNS servers
+* DNS authority structure
+* potential targets for deeper DNS enumeration
+
 
 ## 2. Test Zone Transfer (AXFR)
 

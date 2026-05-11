@@ -13,6 +13,18 @@ Determine authoritative DNS servers.
 
 A structured approach to identifying authoritative DNS infrastructure.
 
+DNS Recon
+   ↓
+Authority Enumeration
+   ↓
+AXFR Testing
+   ↓
+TXT/SPF Analysis
+   ↓
+Subdomain Discovery
+   ↓
+Attack Surface Expansion
+
 ---
 
 ## SOA Enumeration

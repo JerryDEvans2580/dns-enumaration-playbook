@@ -155,6 +155,15 @@ If successful:
 * All DNS records are exposed
 * Internal infrastructure becomes visible
 
+* ## Analysis
+
+Successful zone transfer may expose:
+
+- internal hosts
+- development environments
+- mail infrastructure
+- additional attack surface
+
 ---
 
 ## 3. Enumerate TXT Records
@@ -226,8 +235,16 @@ dnsenum --dnsserver 10.129.14.128 --enum -p 0 -s 0 -o subdomains.txt -f /opt/use
 
 ## 7. Expand Attack Surface
 
-Use discovered data for:
+# Expanding the Attack Surface
 
-* service scanning
-* web enumeration
-* further exploitation
+Discovered hosts should be:
+
+- scanned with Nmap
+- tested for web applications
+- checked for virtual hosts
+- enumerated further
+
+Example:
+```bash
+nmap -sC -sV target-host
+```

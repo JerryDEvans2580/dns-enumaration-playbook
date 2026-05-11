@@ -65,7 +65,7 @@ dig ns domain.com @DNS_SERVER
 ### Example Response
 
 ```text
-; <<>> DiG 9.x <<>> ns domain.com @192.168.x.x
+; <<>> DiG 9.x <<>> ns domain.com @ip-address
 
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR
 ;; WARNING: recursion requested but not available
@@ -105,7 +105,7 @@ version.bind.		0	CH	TXT	"9.16.1-Ubuntu"
 ### We can use the option ANY to view all available records. This will cause the server to show us all available entries that it is willing to disclose. It is important to note that not all entries from the zones will be shown.
 
 ```bash
-dig any inlanefreight.htb @10.129.47.154
+dig any domain.com @ip-address
 
 ; <<>> DiG 9.18.33-1~deb12u2-Debian <<>> any domainame.com @ip-address
 ;; global options: +cmd

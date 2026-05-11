@@ -201,8 +201,10 @@ SPF may reveal:
 
 ## 5. Subdomain Discovery
 
-If AXFR fails:
-
+If the administrator used a subnet for the allow-transfer option for testing purposes or as a workaround solution or set it to any, everyone would query the entire zone file at the DNS server. In addition, other zones can be queried, which may even show internal IP addresses and hostnames.
+```bash
+dig axfr domain.com @ip-address
+```
 * brute-force subdomains
 * use wordlists
 
@@ -216,7 +218,9 @@ Identify hostnames from IP ranges.
 dig -x IP_ADDRESS
 ```
 
----
+And also we can use dnsenum for brutoforcing:
+
+dnsenum --dnsserver 10.129.14.128 --enum -p 0 -s 0 -o subdomains.txt -f /opt/useful/seclists/Discovery/DNS/subdomains-top1million-110000.txt inlanefreight.htb
 
 ## 7. Expand Attack Surface
 

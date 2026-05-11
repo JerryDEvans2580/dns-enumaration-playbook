@@ -104,6 +104,33 @@ version.bind.		0	CH	TXT	"9.16.1-Ubuntu"
 ```
 ### We can use the option ANY to view all available records. This will cause the server to show us all available entries that it is willing to disclose. It is important to note that not all entries from the zones will be shown.
 
+```bash
+dig any inlanefreight.htb @10.129.47.154
+
+; <<>> DiG 9.18.33-1~deb12u2-Debian <<>> any domainame.com @ip-address
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 19568
+;; flags: qr aa rd; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 2
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 62e214bfc5366e83010000006a017bba8fb557247976a1ed (good)
+;; QUESTION SECTION:
+;inlanefreight.htb.		IN	ANY
+
+;; ANSWER SECTION:
+"Important info"
+
+;; ADDITIONAL SECTION:
+"Important info"
+
+;; Query time: 9 msec
+;; SERVER: 10.129.47.154#53(10.129.47.154) (TCP)
+;; WHEN: Mon May 11 01:48:25 CDT 2026
+;; MSG SIZE  rcvd: 437
+```
 
 
 ### Security Insight
